@@ -1,0 +1,37 @@
+{
+  "total_rows": 525840,
+  "locations": [
+    "US_AZ_Phoenix",
+    "US_TX_Abilene",
+    "DE_Bavaria",
+    "ES_Andalusia",
+    "AU_Queensland",
+    "SA_Riyadh",
+    "IN_Rajasthan",
+    "CN_Xinjiang",
+    "UK_Scotland",
+    "BR_CearA"
+  ],
+  "n_locations": 10,
+  "start": "2018-01-01 00:00:00",
+  "end": "2023-12-31 23:00:00",
+  "freq": "h",
+  "hours_per_location": 52584,
+  "anomaly_count": 45617,
+  "anomaly_rate_pct": 8.68,
+  "columns": [
+    "timestamp",
+    "location_id",
+    "latitude",
+    "solar_capacity_kw",
+    "wind_capacity_kw",
+    "ghi_w_m2",
+    "ambient_temp_c",
+    "wind_speed_m_s",
+    "solar_power_kw",
+    "wind_power_kw",
+    "total_power_kw",
+    "anomaly",
+    "anomaly_type"
+  ]
+}
