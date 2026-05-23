@@ -5,17 +5,16 @@ Isolation Forest anomaly detector for the multi-location energy dataset.
 
 Pipeline:
   1. Load processed train/val/test splits
-  2. Build sensor feature matrix (physics-informed: no target leakage)
+  2. Build sensor feature matrix
   3. Train one global Isolation Forest (contamination auto-tuned)
   4. Tune contamination parameter on val set via F1 sweep
   5. Evaluate on test set: precision, recall, F1, confusion matrix
   6. Flag anomalies across full dataset and save cleaned version
-  7. Persist model + metadata for Week 3 LSTM pipeline
+  7. Persist model
   8. Produce evaluation plots
 
 Key design decisions:
   - Features: raw sensor signals + rolling stats only (NOT power output targets)
-    so the detector is truly unsupervised and won't cheat using labels
   - One model trained globally then evaluated per-location
   - Contamination tuned on val set F1 (realistic for production use)
 """
@@ -48,7 +47,7 @@ MODEL_DIR.mkdir(parents=True, exist_ok=True)
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── Feature matrix definition ─────────────────────────────────────────────────
-# These are SENSOR / PHYSICS features only — no power output targets.
+# These are SENSOR features only — no power output targets.
 # The IF must detect anomalies from sensor behaviour, not from knowing ground truth.
 SENSOR_FEATURES = [
     # Raw sensor readings
@@ -78,7 +77,7 @@ SENSOR_FEATURES = [
 
 def add_if_features(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Add physics-informed features for the Isolation Forest.
+    Add features for the Isolation Forest.
     Works on RAW (unscaled) data so anomaly magnitudes are preserved.
     """
     df = df.copy()
@@ -97,7 +96,7 @@ def add_if_features(df: pd.DataFrame) -> pd.DataFrame:
         df[f"{col}_rmean6"] = df.groupby("location_id")[col].transform(
             lambda x: x.rolling(6, min_periods=1).mean().fillna(0))
 
-    # Physics consistency: solar output per unit GHI (should be stable)
+    # Solar output per unit GHI (should be stable)
     df["hour"]  = df["timestamp"].dt.hour
     df["month"] = df["timestamp"].dt.month
     df["is_day"] = ((df["hour"] >= 6) & (df["hour"] < 20)).astype(int)
