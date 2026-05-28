@@ -403,7 +403,7 @@ def plot_training_curves(hist_raw: dict, hist_clean: dict):
     fig.tight_layout()
     fig.savefig(OUT_DIR / "01_training_curves.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("[✓] 01_training_curves.png")
+    print("training_curves.png")
 
 
 def plot_benchmark(metrics_raw: dict, metrics_clean: dict,
@@ -437,7 +437,7 @@ def plot_benchmark(metrics_raw: dict, metrics_clean: dict,
     fig.tight_layout()
     fig.savefig(OUT_DIR / "02_benchmark_comparison.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("[✓] 02_benchmark_comparison.png")
+    print("benchmark_comparison.png")
 
 
 def plot_forecast_vs_actual(params_raw: LSTMParams,
@@ -464,7 +464,7 @@ def plot_forecast_vs_actual(params_raw: LSTMParams,
     fig.tight_layout()
     fig.savefig(OUT_DIR / "03_forecast_vs_actual.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("[✓] 03_forecast_vs_actual.png")
+    print("forecast_vs_actual.png")
 
 
 def plot_error_distribution(pred_raw: np.ndarray,
@@ -490,7 +490,7 @@ def plot_error_distribution(pred_raw: np.ndarray,
     fig.tight_layout()
     fig.savefig(OUT_DIR / "04_error_distribution.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("[✓] 04_error_distribution.png")
+    print("error_distribution.png")
 
 
 def plot_improvement_summary(metrics_raw: dict, metrics_clean: dict,
@@ -522,7 +522,7 @@ def plot_improvement_summary(metrics_raw: dict, metrics_clean: dict,
     fig.tight_layout()
     fig.savefig(OUT_DIR / "05_improvement_summary.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
-    print("[✓] 05_improvement_summary.png")
+    print("improvement_summary.png")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -531,7 +531,7 @@ def plot_improvement_summary(metrics_raw: dict, metrics_clean: dict,
 
 def save_model(params: LSTMParams, path: Path):
     np.savez(path, **params.arrays())
-    print(f"[✓] Saved model → {path.name}")
+    print(f"Saved model → {path.name}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -615,10 +615,9 @@ def run():
                                     for k in ["train_loss","val_loss"]},
     }
     (OUT_DIR / "eval_results.json").write_text(json.dumps(results, indent=2))
-    print(f"[✓] Results saved → {OUT_DIR / 'eval_results.json'}")
+    print(f"Results saved → {OUT_DIR / 'eval_results.json'}")
 
     print(f"\n{'='*58}")
-    print(f"  WEEK 3 COMPLETE")
     print(f"  Avg MAE improvement from IF filtering: {avg_improve:+.2f}%")
     print(f"  All outputs → {OUT_DIR}")
     print(f"{'='*58}")
